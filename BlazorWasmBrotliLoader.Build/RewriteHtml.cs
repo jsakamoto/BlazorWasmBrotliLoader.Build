@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 
 namespace BlazorWasmBrotliLoader;
 
@@ -20,6 +21,9 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
 
     public bool Recursive { get; set; }
 
+    [Output]
+    public ITaskItem[] RewritedItems { get; set; } = Array.Empty<ITaskItem>();
+
     private struct State
     {
         public bool HasChanged;
@@ -32,6 +36,7 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
     {
         if (!this.InjectBrotliLoader && !this.RewriteBaseHref) return true;
 
+        var rewritedItems = new List<ITaskItem>();
         var fileSearchPatterns = this.FileSearchPatterns.Split(';').Select(pattern => pattern.Trim()).Where(pattern => pattern != "");
         Parallel.ForEach(fileSearchPatterns, fileSearchPattern =>
         {
@@ -39,14 +44,17 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
             var targetFilesPath = Directory.GetFiles(this.WebRootPath, fileSearchPattern, searchOption);
             Parallel.ForEach(targetFilesPath, targetFilePath =>
             {
-                this.Rewrite(targetFilePath);
+                var rewited = this.Rewrite(targetFilePath);
+                if (rewited) { lock (rewritedItems) rewritedItems.Add(new TaskItem(targetFilePath)); }
             });
         });
+
+        this.RewritedItems = rewritedItems.ToArray();
 
         return true;
     }
 
-    private void Rewrite(string filePath)
+    private bool Rewrite(string filePath)
     {
         var state = new State();
         var lines = System.IO.File.ReadLines(filePath);
@@ -70,6 +78,7 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
         {
             System.IO.File.WriteAllLines(filePath, rewritedLines);
         }
+        return state.HasChanged;
     }
 
     private bool RewritedBaseHref(ref State state, List<string> rewritedLines, string line)
