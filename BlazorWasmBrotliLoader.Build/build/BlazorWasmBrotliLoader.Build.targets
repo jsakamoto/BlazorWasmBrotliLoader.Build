@@ -1,5 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="BlazorWasmBrotliLoader.RewriteHtml" AssemblyFile="$(MSBuildThisFileDirectory)../tools/BlazorWasmBrotliLoader.Build.dll" />
+  <UsingTask TaskName="BlazorWasmBrotliLoader.UpdateServiceWorkerAssetsManifestJs" AssemblyFile="$(MSBuildThisFileDirectory)../tools/BlazorWasmBrotliLoader.Build.dll" />
 
   <Target Name="BlazorWasmBrotliLoader_DefineProperties" DependsOnTargets="$(BeforeBlazorWasmBrotliLoader)">
     <PropertyGroup>
@@ -17,10 +18,18 @@
       <BroltiLoaderInjectLoader Condition=" '$(BroltiLoaderInjectLoader)' == '' ">true</BroltiLoaderInjectLoader>
       <BroltiLoaderRewriteBaseHref Condition=" '$(BroltiLoaderRewriteBaseHref)' == '' ">false</BroltiLoaderRewriteBaseHref>
       <BroltiLoaderBaseHref Condition=" '$(BroltiLoaderBaseHref)' == '' ">/</BroltiLoaderBaseHref>
+
+      <BroltiLoaderSvcWorkerAssetsJs Condition=" '$(BroltiLoaderSvcWorkerAssetsJs)'=='' AND '$(ServiceWorkerAssetsManifest)' != '' ">$(BroltiLoaderWebRootPath)$(ServiceWorkerAssetsManifest)</BroltiLoaderSvcWorkerAssetsJs>
     </PropertyGroup>
   </Target>
 
-  <Target Name="BlazorWasmBrotliLoader_RewriteIndexHtml" AfterTargets="Publish" DependsOnTargets="BlazorWasmBrotliLoader_DefineProperties">
+  <Target Name="BlazorWasmBrotliLoader_Inject" AfterTargets="Publish" DependsOnTargets="BlazorWasmBrotliLoader_DefineProperties">
+
+    <!-- Copy brotrli loader script files -->
+    <Copy Condition="'$(BroltiLoaderInjectLoader)' == 'true'" SourceFiles="$(MSBuildThisFileDirectory)../bundle/scripts/decode.min.js" DestinationFolder="$(BroltiLoaderWebRootPath)" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(BroltiLoaderInjectLoader)' == 'true'" SourceFiles="$(MSBuildThisFileDirectory)../bundle/scripts/brotliloader.min.js" DestinationFolder="$(BroltiLoaderWebRootPath)" SkipUnchangedFiles="true" />
+
+    <!-- Rewrite HTML files (base URL in the "<base href='~'/>" element, and inject Brotli loader) -->
     <BlazorWasmBrotliLoader.RewriteHtml
       WebRootPath="$(BroltiLoaderWebRootPath)"
       FileSearchPatterns="$(BroltiLoaderRewriteHtmlFileSearchPattern)"
@@ -28,12 +37,14 @@
       InjectBrotliLoader="$(BroltiLoaderInjectLoader)"
       RewriteBaseHref="$(BroltiLoaderRewriteBaseHref)"
       BaseHref="$(BroltiLoaderBaseHref)" />
-  </Target>
 
-  <!-- Copy brotrli loader script files -->
-  <Target Name="BlazorWasmBrotliLoader_CopyBrotliLoader" AfterTargets="Publish" Condition=" '$(BroltiLoaderInjectLoader)' == 'true' " DependsOnTargets="BlazorWasmBrotliLoader_DefineProperties">
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)../bundle/scripts/decode.min.js" DestinationFolder="$(BroltiLoaderWebRootPath)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)../bundle/scripts/brotliloader.min.js" DestinationFolder="$(BroltiLoaderWebRootPath)" SkipUnchangedFiles="true" />
+    <!-- Update the service wroker assets JavaScript file (Update hash and add hash entries for brotli loader script files) -->
+    <BlazorWasmBrotliLoader.UpdateServiceWorkerAssetsManifestJs
+      Condition=" '$(BroltiLoaderSvcWorkerAssetsJs)' != '' AND Exists($(BroltiLoaderSvcWorkerAssetsJs))"
+      WebRootPath="$(BroltiLoaderWebRootPath)"
+      ServiceWorkerAssetsManifestJs="$(BroltiLoaderSvcWorkerAssetsJs)"
+      InjectBrotliLoader="$(BroltiLoaderInjectLoader)" />
+  
   </Target>
 
 </Project>

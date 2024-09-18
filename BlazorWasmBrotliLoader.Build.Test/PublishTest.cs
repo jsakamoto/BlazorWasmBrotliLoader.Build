@@ -1,5 +1,4 @@
 ﻿using BlazorWasmBrotliLoader.Build.Test.Internals;
-using Toolbelt;
 using static Toolbelt.Diagnostics.XProcess;
 
 namespace BlazorWasmBrotliLoader.Build.Test;
@@ -7,24 +6,12 @@ namespace BlazorWasmBrotliLoader.Build.Test;
 [Parallelizable(ParallelScope.Children)]
 public class PublishTest
 {
-    private static void CopyBundleScriptsTo(string targetDir)
-    {
-        var solutionDir = FileIO.FindContainerDirToAncestor("BlazorWasmBrotliLoader.Build.sln");
-        var bundleScriptsDir = Path.Combine(solutionDir, "BlazorWasmBrotliLoader.Build", "bundle", "scripts");
-        foreach (var scriptName in new[] {  "decode.min.js", "brotliloader.min.js" })
-        {
-            File.Copy(
-                sourceFileName: Path.Combine(bundleScriptsDir, scriptName),
-                destFileName: Path.Combine(targetDir, scriptName));
-        }
-    }
-
     [Test]
     public async Task Publish_InjectBrotliLoader_Test()
     {
         // Given
         using var workDir = new WorkDir("PublishTest", "001 SampleApp");
-        CopyBundleScriptsTo(workDir.ExpectedDir);
+        BundleScripts.CopyTo(workDir.ExpectedDir);
         File.Exists(Path.Combine(workDir.ProjectDir, "decode.min.js")).IsFalse();
         File.Exists(Path.Combine(workDir.ProjectDir, "brotliloader.min.js")).IsFalse();
 
@@ -43,7 +30,7 @@ public class PublishTest
     }
 
     [Test]
-    public async Task Publish_WithNoCompression_Test()
+    public async Task Publish_with_NoCompression_Test()
     {
         // Given
         using var workDir = new WorkDir("PublishTest", "002 SampleApp with no compression");
@@ -63,11 +50,11 @@ public class PublishTest
     }
 
     [Test]
-    public async Task Publish_WithRewriteBaseHref_Test()
+    public async Task Publish_PWA_with_RewriteBaseHref_Test()
     {
         // Given
-        using var workDir = new WorkDir("PublishTest", "003 SampleApp with rewrite base href");
-        CopyBundleScriptsTo(workDir.ExpectedDir);
+        using var workDir = new WorkDir("PublishTest", "003 Sample PWA with rewrite base href");
+        BundleScripts.CopyTo(workDir.ExpectedDir);
         File.Exists(Path.Combine(workDir.ProjectDir, "decode.min.js")).IsFalse();
         File.Exists(Path.Combine(workDir.ProjectDir, "brotliloader.min.js")).IsFalse();
 
@@ -81,7 +68,8 @@ public class PublishTest
             targetDir: Path.Combine(workDir.TargetDir, "wwwroot"),
             expectedDir: workDir.ExpectedDir,
             patterns: "*.html;*.js",
-            recursive: false
+            recursive: false,
+            filter: args => args.ExpectedContentLine.Contains("(*ignore*)") ? false : true
         );
     }
 }

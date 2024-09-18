@@ -29,6 +29,9 @@
 
   <ItemGroup>
     <Compile Remove="Fixtures/**/*" />
+    <Content Remove="Fixtures/**/*" />
+    <None Remove="Fixtures/**/*" />
+    <None Include="Fixtures/**/*" />
   </ItemGroup>
 
 </Project>

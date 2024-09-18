@@ -13,8 +13,13 @@ internal static class TestAssert
             .ToArray();
     }
 
-
-    internal static void FilesAreEquals(string targetDir, string expectedDir, string patterns = "*.*", bool recursive = true)
+    internal static void FilesAreEquals(
+        string targetDir,
+        string expectedDir,
+        string patterns = "*.*",
+        bool recursive = true,
+        Func<(string RelativePath, string TargetContentLine, string ExpectedContentLine), bool>? filter = null
+    )
     {
         var targetFiles = GetFiles(targetDir, patterns, recursive);
         var expectedFiles = GetFiles(expectedDir, patterns, recursive);
@@ -28,15 +33,19 @@ internal static class TestAssert
             var expectedFile = expectedFiles.First(f => f.RelativePath == targetFile.RelativePath);
 
             var targetFileContent = File.ReadAllLines(targetFile.Path).ToList();
-            var expectdFileContent = File.ReadAllLines(expectedFile.Path).ToList();
-            var maxLineCount = Math.Max(targetFileContent.Count, expectdFileContent.Count);
+            var expectedFileContent = File.ReadAllLines(expectedFile.Path).ToList();
+            var maxLineCount = Math.Max(targetFileContent.Count, expectedFileContent.Count);
             targetFileContent.AddRange(Enumerable.Repeat("", maxLineCount - targetFileContent.Count));
-            expectdFileContent.AddRange(Enumerable.Repeat("", maxLineCount - expectdFileContent.Count));
+            expectedFileContent.AddRange(Enumerable.Repeat("", maxLineCount - expectedFileContent.Count));
 
             var unmatchLineIndex = -1;
             for (var i = 0; i < maxLineCount; i++)
             {
-                if (targetFileContent[i] != expectdFileContent[i])
+                var targetContentline = targetFileContent[i];
+                var expectedContentline = expectedFileContent[i];
+                if (filter != null && filter((targetFile.RelativePath, targetContentline, expectedContentline)) == false) continue;
+
+                if (targetContentline != expectedContentline)
                 {
                     unmatchLineIndex = i;
                     break;
@@ -50,7 +59,7 @@ internal static class TestAssert
                     .Select((content, index) => $"{index + 1}".PadLeft(lineNumberWidth) + " " + content)
                     .Select((content, index) => (unmatchLineIndex == index ? "> " : "  ") + content)
                     .ToList();
-                var expectedContentLine = expectdFileContent[unmatchLineIndex];
+                var expectedContentLine = expectedFileContent[unmatchLineIndex];
                 details.Insert(unmatchLineIndex + 1, "<-".PadRight(lineNumberWidth + 3) + expectedContentLine);
                 var detail = details.Aggregate((current, next) => current + "\r\n" + next);
 
