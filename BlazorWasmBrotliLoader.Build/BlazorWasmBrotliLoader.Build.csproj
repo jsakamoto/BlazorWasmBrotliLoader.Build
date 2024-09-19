@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>BrotliLoader</RootNamespace>
+    <RootNamespace>BlazorWasmBrotliLoader</RootNamespace>
     <IsTool>true</IsTool>
     <LangVersion>Latest</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>

@@ -22,7 +22,7 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
     public bool Recursive { get; set; }
 
     [Output]
-    public ITaskItem[] RewritedItems { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] RewrittenFiles { get; set; } = Array.Empty<ITaskItem>();
 
     private struct State
     {
@@ -49,7 +49,7 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
             });
         });
 
-        this.RewritedItems = rewritedItems.ToArray();
+        this.RewrittenFiles = rewritedItems.ToArray();
 
         return true;
     }

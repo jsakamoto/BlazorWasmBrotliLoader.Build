@@ -1,4 +1,6 @@
 ﻿
+using System.IO.Compression;
+
 namespace BlazorWasmBrotliLoader.Build.Test.Internals;
 
 internal static class TestAssert
@@ -32,8 +34,8 @@ internal static class TestAssert
         {
             var expectedFile = expectedFiles.First(f => f.RelativePath == targetFile.RelativePath);
 
-            var targetFileContent = File.ReadAllLines(targetFile.Path).ToList();
-            var expectedFileContent = File.ReadAllLines(expectedFile.Path).ToList();
+            var targetFileContent = ReadAllLines(targetFile.Path).ToList();
+            var expectedFileContent = ReadAllLines(expectedFile.Path).ToList();
             var maxLineCount = Math.Max(targetFileContent.Count, expectedFileContent.Count);
             targetFileContent.AddRange(Enumerable.Repeat("", maxLineCount - targetFileContent.Count));
             expectedFileContent.AddRange(Enumerable.Repeat("", maxLineCount - expectedFileContent.Count));
@@ -67,6 +69,21 @@ internal static class TestAssert
                     $"The file content of \"{targetFile.RelativePath}\", line number {unmatchLineIndex + 1} is not as expected.\r\n\r\n" +
                     detail);
             }
+        }
+    }
+
+    private static IEnumerable<string> ReadAllLines(string filePath)
+    {
+        var fileStream = File.OpenRead(filePath);
+        using var stream =
+            filePath.EndsWith(".gz") ? new GZipStream(fileStream, CompressionMode.Decompress) as Stream :
+            filePath.EndsWith(".br") ? new BrotliStream(fileStream, CompressionMode.Decompress) as Stream :
+            fileStream;
+
+        var reader = new StreamReader(stream);
+        while (!reader.EndOfStream)
+        {
+            yield return reader.ReadLine() ?? "";
         }
     }
 }

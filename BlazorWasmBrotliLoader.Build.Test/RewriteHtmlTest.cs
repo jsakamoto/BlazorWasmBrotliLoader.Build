@@ -27,7 +27,7 @@ public class RewriteHtmlTest
         TestAssert.FilesAreEquals(workDir.TargetDir, workDir.ExpectedDir);
 
         // Then: 2. The output parameter shows files that are rewrited.
-        task.RewritedItems.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
+        task.RewrittenFiles.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
             $"normal.html",
             $"sub{Path.DirectorySeparatorChar}has-autostart-true.html",
             $"sub{Path.DirectorySeparatorChar}no-blazor.html");
@@ -56,7 +56,7 @@ public class RewriteHtmlTest
         TestAssert.FilesAreEquals(workDir.TargetDir, workDir.ExpectedDir);
 
         // Then: 2. The output parameter shows files that are rewrited.
-        task.RewritedItems.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
+        task.RewrittenFiles.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
             $"normal.html");
     }
 
@@ -83,7 +83,7 @@ public class RewriteHtmlTest
         TestAssert.FilesAreEquals(workDir.TargetDir, workDir.ExpectedDir);
 
         // Then: 2. The output parameter shows files that are rewrited.
-        task.RewritedItems.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
+        task.RewrittenFiles.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
             $"normal.html",
             $"sub{Path.DirectorySeparatorChar}has-autostart-true.html",
             $"sub{Path.DirectorySeparatorChar}no-blazor.html");
@@ -112,7 +112,7 @@ public class RewriteHtmlTest
         TestAssert.FilesAreEquals(workDir.TargetDir, workDir.ExpectedDir);
 
         // Then: 2. The output parameter shows files that are rewrited.
-        task.RewritedItems.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
+        task.RewrittenFiles.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
             $"normal.html",
             $"sub{Path.DirectorySeparatorChar}has-autostart-true.html");
     }

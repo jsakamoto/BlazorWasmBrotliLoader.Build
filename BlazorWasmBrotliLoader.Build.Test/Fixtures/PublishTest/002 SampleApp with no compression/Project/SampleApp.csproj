@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RCLProject\RCLProject.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorWasmBrotliLoader.Build" Version="1.0.0-preview.1" />
   </ItemGroup>
 

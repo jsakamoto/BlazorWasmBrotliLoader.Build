@@ -1,6 +1,7 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="BlazorWasmBrotliLoader.RewriteHtml" AssemblyFile="$(MSBuildThisFileDirectory)../tools/BlazorWasmBrotliLoader.Build.dll" />
   <UsingTask TaskName="BlazorWasmBrotliLoader.UpdateServiceWorkerAssetsManifestJs" AssemblyFile="$(MSBuildThisFileDirectory)../tools/BlazorWasmBrotliLoader.Build.dll" />
+  <UsingTask TaskName="BlazorWasmBrotliLoader.RecompressStaticFiles" AssemblyFile="$(MSBuildThisFileDirectory)../tools/BlazorWasmBrotliLoader.Build.dll" />
 
   <Target Name="BlazorWasmBrotliLoader_DefineProperties" DependsOnTargets="$(BeforeBlazorWasmBrotliLoader)">
     <PropertyGroup>
@@ -9,8 +10,6 @@
       <BroltiLoaderRecursive Condition="'$(BroltiLoaderRecursive)'==''">true</BroltiLoaderRecursive>
 
       <BroltiLoaderBlazorBootJson>$(BroltiLoaderWebRootPath)_framework\blazor.boot.json</BroltiLoaderBlazorBootJson>
-      <BroltiLoaderCompressGz>false</BroltiLoaderCompressGz>
-      <BroltiLoaderCompressGz Condition="Exists('$(BroltiLoaderBlazorBootJson).gz')">true</BroltiLoaderCompressGz>
       <BroltiLoaderCompressBr>false</BroltiLoaderCompressBr>
       <BroltiLoaderCompressBr Condition="Exists('$(BroltiLoaderBlazorBootJson).br')">true</BroltiLoaderCompressBr>
 
@@ -36,7 +35,12 @@
       Recursive="$(BroltiLoaderRecursive)"
       InjectBrotliLoader="$(BroltiLoaderInjectLoader)"
       RewriteBaseHref="$(BroltiLoaderRewriteBaseHref)"
-      BaseHref="$(BroltiLoaderBaseHref)" />
+      BaseHref="$(BroltiLoaderBaseHref)">
+      <Output TaskParameter="RewrittenFiles" ItemName="_BrotliLoader_RewrittenFiles" />
+    </BlazorWasmBrotliLoader.RewriteHtml>
+
+    <!-- Recompress static files (Gzip and Brotli) -->
+    <BlazorWasmBrotliLoader.RecompressStaticFiles Files="@(_BrotliLoader_RewrittenFiles)" />
 
     <!-- Update the service wroker assets JavaScript file (Update hash and add hash entries for brotli loader script files) -->
     <BlazorWasmBrotliLoader.UpdateServiceWorkerAssetsManifestJs
@@ -44,7 +48,7 @@
       WebRootPath="$(BroltiLoaderWebRootPath)"
       ServiceWorkerAssetsManifestJs="$(BroltiLoaderSvcWorkerAssetsJs)"
       InjectBrotliLoader="$(BroltiLoaderInjectLoader)" />
-  
+
   </Target>
 
 </Project>

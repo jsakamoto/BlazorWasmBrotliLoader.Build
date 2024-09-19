@@ -24,8 +24,7 @@ public class PublishTest
         TestAssert.FilesAreEquals(
             targetDir: Path.Combine(workDir.TargetDir, "wwwroot"),
             expectedDir: workDir.ExpectedDir,
-            patterns: "*.html;*.js",
-            recursive: false
+            patterns: "*.html;*.html.gz;*.html.br;decode.min.js;brotliloader.min.js"
         );
     }
 
@@ -44,8 +43,7 @@ public class PublishTest
         TestAssert.FilesAreEquals(
             targetDir: Path.Combine(workDir.TargetDir, "wwwroot"),
             expectedDir: workDir.ExpectedDir,
-            patterns: "*.html;*.js",
-            recursive: false
+            patterns: "*.html;*.html.gz;*.html.br;decode.min.js;brotliloader.min.js"
         );
     }
 
@@ -67,7 +65,7 @@ public class PublishTest
         TestAssert.FilesAreEquals(
             targetDir: Path.Combine(workDir.TargetDir, "wwwroot"),
             expectedDir: workDir.ExpectedDir,
-            patterns: "*.html;*.js",
+            patterns: "*.html;*.js;*.html.gz;*.html.br",
             recursive: false,
             filter: args => args.ExpectedContentLine.Contains("(*ignore*)") ? false : true
         );
