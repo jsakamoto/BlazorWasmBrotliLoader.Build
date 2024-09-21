@@ -20,37 +20,7 @@ internal class WorkDir : IDisposable
         this.ExpectedDir = Path.Combine(this._workDir, "Expected");
     }
 
-    public static implicit operator string(WorkDir workDirectory)
-    {
-        return workDirectory._workDir.Path;
-    }
+    public static implicit operator string(WorkDir workDirectory) => workDirectory._workDir.Path;
 
-    //internal static WorkDirectory SetupWorkDir(params string[] subDirs)
-    //{
-    //    var srcDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Fixtures", Path.Combine(subDirs));
-    //    return SetupWorkDirCore(srcDir);
-    //}
-
-    //internal static WorkDirectory SetupWorkDir(string siteType, string protocol)
-    //{
-    //    var srcDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Fixtures", siteType, protocol);
-    //    return SetupWorkDirCore(srcDir);
-    //}
-
-    //private static WorkDirectory SetupWorkDirCore(string srcDir)
-    //{
-    //    var workDir = Toolbelt.WorkDirectory.CreateCopyFrom(srcDir, null);
-    //    var gitDir = Path.Combine(workDir, "(.git)");
-    //    if (Directory.Exists(gitDir))
-    //    {
-    //        Directory.Move(gitDir, Path.Combine(workDir, ".git"));
-    //    }
-
-    //    return workDir;
-    //}
-
-    public void Dispose()
-    {
-        this._workDir.Dispose();
-    }
+    public void Dispose() => this._workDir.Dispose();
 }

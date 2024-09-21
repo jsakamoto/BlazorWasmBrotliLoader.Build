@@ -34,10 +34,10 @@ Basically, **that's all**.
 
 ## ⚙️Configurations
 
-If you don't want to enable the Brotli pre-compressed file loading feature, set the `BroltiLoaderInjectLoader` MSBuild property to `false`. For example, you can do it in the `dotnet publish` command as below.
+If you don't want to enable the Brotli pre-compressed file loading feature, set the `BrotliLoaderInjectLoader` MSBuild property to `false`. For example, you can do it in the `dotnet publish` command as below.
 
 ```
-dotnet publish -p BroltiLoaderInjectLoader=false
+dotnet publish -p BrotliLoaderInjectLoader=false
 ```
 
 ## 🎉Release notes

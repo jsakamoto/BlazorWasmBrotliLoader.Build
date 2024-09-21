@@ -57,7 +57,7 @@ public class PublishTest
         File.Exists(Path.Combine(workDir.ProjectDir, "brotliloader.min.js")).IsFalse();
 
         // When
-        using var publishCommand = Start("dotnet", $"publish -p BroltiLoaderRewriteBaseHref=true -p BroltiLoaderBaseHref=/fizz/buzz/ -c Release -o \"{workDir.TargetDir}\"", workDir.ProjectDir);
+        using var publishCommand = Start("dotnet", $"publish -p BrotliLoaderRewriteBaseHref=true -p BrotliLoaderBaseHref=/fizz/buzz/ -c Release -o \"{workDir.TargetDir}\"", workDir.ProjectDir);
         await publishCommand.WaitForExitAsync();
         publishCommand.ExitCode.Is(0, message: publishCommand.Output);
 
