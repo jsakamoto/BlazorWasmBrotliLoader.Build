@@ -11,6 +11,8 @@
     <Version>1.0.0-preview.1</Version>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jsakamoto/BlazorWasmBrotliLoader.Build</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <PackageTags>blazor,blazor-webassembly,blazorwebassembly,blazorwasm,brotli</PackageTags>
     <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageOutputPath>../_dist</PackageOutputPath>
