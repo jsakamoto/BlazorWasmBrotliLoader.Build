@@ -17,7 +17,7 @@
     <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageOutputPath>../_dist</PackageOutputPath>
     <Copyright>Copyright © 2024 J.Sakamoto, Mozilla Public License 2.0</Copyright>
-    <Description>This package provides post published processing to rewrite the fallback page to load Brtoli compressed Blazor WebAssembly applicatgion files.</Description>
+    <Description>A NuGet package that provides post published processing to rewrite the fallback page to load Brotli compressed Blazor WebAssembly application files.</Description>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PackageIcon>nupkg-icon.png</PackageIcon>
