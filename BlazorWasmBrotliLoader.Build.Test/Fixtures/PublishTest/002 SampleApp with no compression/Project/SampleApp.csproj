@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorWasmBrotliLoader.Build" Version="1.0.0-preview.1" />
+    <PackageReference Include="BlazorWasmBrotliLoader.Build" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
