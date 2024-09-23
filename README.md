@@ -22,15 +22,27 @@ Basically, **that's all**.
 
 **Once you install this package, the output of the `dotnet publish` command will make the `wwwroot/index.html` load `*.wasm.br` files!** 🎉
 
+> [!IMPORTANT]  
+> If the Blazor WebAssembly app is hosted on a server that supports Brotli compression, **you don't have to use this package**. For example, the ASP.NET Core server of .NET9 will handle them well ([see also here](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/static-files?view=aspnetcore-9.0)). This package is only useful for an app hosted on a server that doesn't support Brotli compression, such as a simple static content server, such as GitHub Pages.
+
 > [!NOTE]  
 > In fact, you can implement the feature of loading Brotli pre-compressed files by yourself without depending on this package. [Microsoft's official document](https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/webassembly#compression) tells us how to do it. But it can be hard work, particularly if you are implementing a PWA. This NuGet package allows us to use pre-compression application files out of the box!
 
 > [!NOTE]  
 > For years, the feature of loading Brotli pre-compressed files has been built into the ["PublishSPAforGitHubPages.Build"](https://github.com/jsakamoto/PublishSPAforGitHubPages.Build) package. However, since it is strongly tied to publishing on GitHub Pages, it can not be used on other platforms. So, I decided to split this feature into an individual package.
 
-> [!WARNING]  
-> If the Blazor WebAssembly app is hosted on a server that supports Brotli compression, **you don't have to use this package**. For example, the ASP.NET Core server of .NET9 will handle them well ([see also here](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/static-files?view=aspnetcore-9.0)). This package is only useful for an app hosted on a server that doesn't support Brotli compression, such as a simple static content server, such as GitHub Pages.
+## 🛜 PWAs and Service Workers
 
+If your Blazor WebAssembly PWA loading Brotli pre-compressed files needs to run offline, please ensure the service worker loads "*.br" files in the offline cache. For example, if you generated your Blazor WebAssmebly PWA project by the standard project template, you will need to update the `wwwroot/service-worker-published.js` file. In this case, you need to append the `/\.br$/` regex pattern to the definition of the `offlineAssetsInclude` array constant variable in the `wwwroot/service-worker-published.js` file.
+
+```js
+// 🗒️ wwwroot/service-worker-published.js
+...
+const offlineAssetsInclude = [ 
+  /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/,
+  /\.br$/ // 👈 Add this line
+];
+```
 
 ## ⚙️Configurations
 
