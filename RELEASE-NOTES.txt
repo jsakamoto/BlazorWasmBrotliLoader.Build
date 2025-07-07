@@ -1,2 +1,5 @@
+v.1.0.1
+- Fix: Fixed an error that occurred when the file name contained a URL-encoded file path.
+
 v.1.0.0
 - 1st release.
