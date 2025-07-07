@@ -36,7 +36,7 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
     {
         if (!this.InjectBrotliLoader && !this.RewriteBaseHref) return true;
 
-        var rewritedItems = new List<ITaskItem>();
+        var rewrittenItems = new List<ITaskItem>();
         var fileSearchPatterns = this.FileSearchPatterns.Split(';').Select(pattern => pattern.Trim()).Where(pattern => pattern != "");
         Parallel.ForEach(fileSearchPatterns, fileSearchPattern =>
         {
@@ -45,11 +45,11 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
             Parallel.ForEach(targetFilesPath, targetFilePath =>
             {
                 var rewited = this.Rewrite(targetFilePath);
-                if (rewited) { lock (rewritedItems) rewritedItems.Add(new TaskItem(targetFilePath)); }
+                if (rewited) { lock (rewrittenItems) rewrittenItems.Add(new TaskItem(targetFilePath.Replace("%", "%25"))); }
             });
         });
 
-        this.RewrittenFiles = rewritedItems.ToArray();
+        this.RewrittenFiles = rewrittenItems.ToArray();
 
         return true;
     }
