@@ -116,4 +116,32 @@ public class RewriteHtmlTest
             $"normal.html",
             $"sub{Path.DirectorySeparatorChar}has-autostart-true.html");
     }
+
+    [Test]
+    public void RewriteHtml_EscapedPath_Test()
+    {
+        // Given
+        using var workDir = new WorkDir("RewriteHtmlTest", "005 Escaped Path");
+
+        // When
+        var task = new RewriteHtml
+        {
+            WebRootPath = workDir.TargetDir,
+            FileSearchPatterns = "*.html",
+            Recursive = true,
+            InjectBrotliLoader = true,
+            RewriteBaseHref = false,
+            BaseHref = "/",
+        };
+
+        task.Execute().IsTrue();
+
+        // Then: 1. files are rewritten expectedly.
+        TestAssert.FilesAreEquals(workDir.TargetDir, workDir.ExpectedDir);
+
+        // Then: 2. The output parameter shows files that are rewritten.
+        task.RewrittenFiles.Select(item => Path.GetRelativePath(workDir.TargetDir, item.ItemSpec)).Order().Is(
+            $"fizz%3abuzz{Path.DirectorySeparatorChar}index.html",
+            $"foo%3abar.html");
+    }
 }
