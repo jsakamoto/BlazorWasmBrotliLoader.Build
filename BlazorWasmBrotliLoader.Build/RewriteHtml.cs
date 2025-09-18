@@ -107,12 +107,12 @@ public class RewriteHtml : Microsoft.Build.Utilities.Task
         if (!this.InjectBrotliLoader) return false;
         if (state.DisabledAutoStartOfBlazorWasmLoader) return false;
 
-        var m = Regex.Match(line, @"(<script[^>]+src=""_framework/blazor.webassembly.js""[^>]*)(></script>.*)");
+        var m = Regex.Match(line, @"(?<part1><script[^>]+src=""_framework/blazor\.webassembly(\.[0-9a-zA-Z]+)?\.js""[^>]*)(?<part2>></script>.*)");
         if (m.Success)
         {
             state.DisabledAutoStartOfBlazorWasmLoader = true;
-            var part1 = m.Groups[1].Value;
-            var part2 = m.Groups[2].Value;
+            var part1 = m.Groups["part1"].Value;
+            var part2 = m.Groups["part2"].Value;
             var m2 = Regex.Match(part1, @"autostart="".+""");
             if (m2.Success)
                 part1 = part1.Substring(0, m2.Index) + @"autostart=""false""" + part1.Substring(m2.Index + m2.Length);
