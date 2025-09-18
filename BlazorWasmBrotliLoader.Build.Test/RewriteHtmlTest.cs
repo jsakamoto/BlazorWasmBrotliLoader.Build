@@ -7,7 +7,7 @@ public class RewriteHtmlTest
     public static IEnumerable<object[]> TargetFrameworks =
     [
         ["net8.0"],
-        // ["net10.0"], // not supported yet
+        ["net10.0"],
     ];
 
     [TestCaseSource(nameof(TargetFrameworks))]
