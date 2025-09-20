@@ -9,7 +9,7 @@ public class PublishTest
     public static IEnumerable<object[]> TargetFrameworks =
     [
         ["net8.0"],
-        // ["net10.0"], // not supported yet
+        ["net10.0"],
     ];
 
     [TestCaseSource(nameof(TargetFrameworks))]
@@ -72,8 +72,7 @@ public class PublishTest
             targetDir: Path.Combine(workDir.TargetDir, "wwwroot"),
             expectedDir: workDir.ExpectedDir,
             patterns: "*.html;*.js;*.html.gz;*.html.br",
-            recursive: false,
-            filter: args => args.ExpectedContentLine.Contains("(*ignore*)") ? false : true
+            recursive: false
         );
     }
 }

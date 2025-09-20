@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SampleApp</title>
+    <base href="/fizz/buzz/" />
+    <link href="_framework/dotnet.(*ignore*).js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="(*ignore*)" />
+    <link rel="stylesheet" href="css/blazor-ui.css" />
+    <!-- If you add any scoped CSS files, uncomment the following to load them
+    <link href="SampleApp.styles.css" rel="stylesheet" /> -->
+    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <script type="importmap">{
+  "imports": {
+    /*ignore-line*/ "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.(*ignore*).js",
+    /*ignore-line*/ "./_framework/dotnet.js": "./_framework/dotnet.(*ignore*).js",
+    /*ignore-line*/ "./_framework/dotnet.native.js": "./_framework/dotnet.native.(*ignore*).js",
+    /*ignore-line*/ "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.(*ignore*).js"
+  },
+  "scopes": {},
+  "integrity": {
+    /*ignore-line*/ "./_framework/blazor.webassembly(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/blazor.webassembly(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet.native(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet.native(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet.runtime(*ignore*).js": "(*ignore*)",
+    /*ignore-line*/ "./_framework/dotnet.runtime(*ignore*).js": "(*ignore*)"
+  }
+}</script>
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="_framework/blazor.webassembly.(*ignore*).js" autostart="false"></script>
+    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script src="brotliloader.min.js" type="module"></script>
+</body>
+
+</html>
