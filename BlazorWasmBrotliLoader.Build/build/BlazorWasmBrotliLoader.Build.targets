@@ -8,10 +8,13 @@
       <BrotliLoaderWebRootPath Condition=" '$(BrotliLoaderWebRootPath)' == '' ">$([System.IO.Path]::GetFullPath($(PublishDir)wwwroot))\</BrotliLoaderWebRootPath>
       <BrotliLoaderRewriteHtmlFileSearchPattern Condition=" '$(BrotliLoaderRewriteHtmlFileSearchPattern)' == '' ">*.html</BrotliLoaderRewriteHtmlFileSearchPattern>
       <BrotliLoaderRecursive Condition="'$(BrotliLoaderRecursive)'==''">true</BrotliLoaderRecursive>
-
-      <BrotliLoaderBlazorBootJson>$(BrotliLoaderWebRootPath)_framework\blazor.boot.json</BrotliLoaderBlazorBootJson>
+    </PropertyGroup>
+    <ItemGroup>
+      <BrotliLoaderBrMarkerFile Include="$(BrotliLoaderWebRootPath)_framework\Microsoft.AspNetCore.Components.*.br" />
+    </ItemGroup>
+    <PropertyGroup>
       <BrotliLoaderCompressBr>false</BrotliLoaderCompressBr>
-      <BrotliLoaderCompressBr Condition="Exists('$(BrotliLoaderBlazorBootJson).br')">true</BrotliLoaderCompressBr>
+      <BrotliLoaderCompressBr Condition="@(BrotliLoaderBrMarkerFile->Count()) > 0">true</BrotliLoaderCompressBr>
 
       <BrotliLoaderInjectLoader Condition=" '$(BrotliLoaderCompressBr)' == 'false' ">false</BrotliLoaderInjectLoader>
       <BrotliLoaderInjectLoader Condition=" '$(BrotliLoaderInjectLoader)' == '' ">true</BrotliLoaderInjectLoader>
