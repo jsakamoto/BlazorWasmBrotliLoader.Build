@@ -1,3 +1,6 @@
+v.1.0.2
+- Fix: Brotli loader injection not working on .NET 10 platform.
+
 v.1.0.1
 - Fix: Fixed an error that occurred when the file name contained a URL-encoded file path.
 
