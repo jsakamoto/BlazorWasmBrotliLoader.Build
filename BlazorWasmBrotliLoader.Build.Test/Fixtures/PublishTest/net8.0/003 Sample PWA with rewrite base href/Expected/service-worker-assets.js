@@ -10,7 +10,7 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/dotnet.native.8.0.8.(*ignore*).js"
+      "url": "_framework\/dotnet.native.8.0.20.(*ignore*).js"
     },
     {
       "hash": "(*ignore*)",
@@ -18,7 +18,7 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/dotnet.runtime.8.0.8.(*ignore*).js"
+      "url": "_framework\/dotnet.runtime.8.0.20.(*ignore*).js"
     },
     {
       "hash": "(*ignore*)",

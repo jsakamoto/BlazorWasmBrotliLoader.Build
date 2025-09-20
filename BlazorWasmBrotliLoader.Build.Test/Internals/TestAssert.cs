@@ -1,5 +1,6 @@
 ﻿
 using System.IO.Compression;
+using System.Text.RegularExpressions;
 
 namespace BlazorWasmBrotliLoader.Build.Test.Internals;
 
@@ -19,8 +20,7 @@ internal static class TestAssert
         string targetDir,
         string expectedDir,
         string patterns = "*.*",
-        bool recursive = true,
-        Func<(string RelativePath, string TargetContentLine, string ExpectedContentLine), bool>? filter = null
+        bool recursive = true
     )
     {
         var targetFiles = GetFiles(targetDir, patterns, recursive);
@@ -45,9 +45,17 @@ internal static class TestAssert
             {
                 var targetContentline = targetFileContent[i];
                 var expectedContentline = expectedFileContent[i];
-                if (filter != null && filter((targetFile.RelativePath, targetContentline, expectedContentline)) == false) continue;
 
-                if (targetContentline != expectedContentline)
+                if (expectedContentline.Contains("/*ignore-line*/")) continue;
+
+                var expectedlineSpans = expectedContentline.Split("(*ignore*)");
+                foreach (var expectedLineSpan in expectedlineSpans)
+                {
+                    if (!targetContentline.StartsWith(expectedLineSpan)) break;
+                    targetContentline = Regex.Replace(targetContentline[expectedLineSpan.Length..], @"^[^\.\""\']+", "");
+                }
+
+                if (targetContentline != "")
                 {
                     unmatchLineIndex = i;
                     break;
