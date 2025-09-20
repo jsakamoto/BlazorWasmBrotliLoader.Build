@@ -4,11 +4,17 @@ namespace BlazorWasmBrotliLoader.Build.Test;
 
 public class RewriteHtmlTest
 {
-    [Test]
-    public void RewriteHtml_EnableAllOptions_Test()
+    public static IEnumerable<object[]> TargetFrameworks =
+    [
+        ["net8.0"],
+        ["net10.0"],
+    ];
+
+    [TestCaseSource(nameof(TargetFrameworks))]
+    public void RewriteHtml_EnableAllOptions_Test(string targetFramework)
     {
         // Given
-        using var workDir = new WorkDir("RewriteHtmlTest", "001 Enable All Options");
+        using var workDir = new WorkDir("RewriteHtmlTest", targetFramework, "001 Enable All Options");
 
         // When
         var task = new RewriteHtml
@@ -33,11 +39,11 @@ public class RewriteHtmlTest
             $"sub{Path.DirectorySeparatorChar}no-blazor.html");
     }
 
-    [Test]
-    public void RewriteHtml_DisableRecursive_Test()
+    [TestCaseSource(nameof(TargetFrameworks))]
+    public void RewriteHtml_DisableRecursive_Test(string targetFramework)
     {
         // Given
-        using var workDir = new WorkDir("RewriteHtmlTest", "002 Disable Recursive");
+        using var workDir = new WorkDir("RewriteHtmlTest", targetFramework, "002 Disable Recursive");
 
         // When
         var task = new RewriteHtml
@@ -60,11 +66,11 @@ public class RewriteHtmlTest
             $"normal.html");
     }
 
-    [Test]
-    public void RewriteHtml_DisableInjectBrotliLoader_Test()
+    [TestCaseSource(nameof(TargetFrameworks))]
+    public void RewriteHtml_DisableInjectBrotliLoader_Test(string targetFramework)
     {
         // Given
-        using var workDir = new WorkDir("RewriteHtmlTest", "003 Disable Inject Brotli Loader");
+        using var workDir = new WorkDir("RewriteHtmlTest", targetFramework, "003 Disable Inject Brotli Loader");
 
         // When
         var task = new RewriteHtml
@@ -89,11 +95,11 @@ public class RewriteHtmlTest
             $"sub{Path.DirectorySeparatorChar}no-blazor.html");
     }
 
-    [Test]
-    public void RewriteHtml_DisableRewriteBaseHref_Test()
+    [TestCaseSource(nameof(TargetFrameworks))]
+    public void RewriteHtml_DisableRewriteBaseHref_Test(string targetFramework)
     {
         // Given
-        using var workDir = new WorkDir("RewriteHtmlTest", "004 Disable Rewrite Base Href");
+        using var workDir = new WorkDir("RewriteHtmlTest", targetFramework, "004 Disable Rewrite Base Href");
 
         // When
         var task = new RewriteHtml
@@ -117,11 +123,11 @@ public class RewriteHtmlTest
             $"sub{Path.DirectorySeparatorChar}has-autostart-true.html");
     }
 
-    [Test]
-    public void RewriteHtml_EscapedPath_Test()
+    [TestCaseSource(nameof(TargetFrameworks))]
+    public void RewriteHtml_EscapedPath_Test(string targetFramework)
     {
         // Given
-        using var workDir = new WorkDir("RewriteHtmlTest", "005 Escaped Path");
+        using var workDir = new WorkDir("RewriteHtmlTest", targetFramework, "005 Escaped Path");
 
         // When
         var task = new RewriteHtml
