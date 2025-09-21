@@ -8,7 +8,7 @@
     <ImplicitUsings>true</ImplicitUsings>
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
     <Authors>J.Sakamoto</Authors>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/jsakamoto/BlazorWasmBrotliLoader.Build</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>

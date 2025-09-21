@@ -1,3 +1,6 @@
+v.1.0.3
+- Fix: Updating a service worker asset file was incorrect in PWA projects.
+
 v.1.0.2
 - Fix: Brotli loader injection not working on .NET 10 platform.
 
