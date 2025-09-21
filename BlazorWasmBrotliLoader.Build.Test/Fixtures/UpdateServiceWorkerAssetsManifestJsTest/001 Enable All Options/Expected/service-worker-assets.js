@@ -61,12 +61,24 @@ self.assetsManifest = {
       "url": "css\/blazor-ui.css"
     },
     {
+      "hash": "sha256-NzI1MTNiMzQzN2YwOWI3MjliYmM2MDExOTQ5ZGViZjk=",
+      "url": "appsettings.json"
+    },
+    {
       "hash": "sha256-5isFuaZXnWKj6DHD82TZtt54KttxwZPeucyXf1ySerU=",
       "url": "favicon.ico"
     },
     {
+      "hash": "sha256-YWRlNTE0NjA4NzA2MjY1MWE4MmFmYzU1M2YzYzk1OWQ=",
+      "url": "helper.js"
+    },
+    {
       "hash": "sha256-RO7TqAYha5D21uFaiYA\/yUuCqRjp9jfIx+nTU+sV6Fc=",
       "url": "index.html"
+    },
+    {
+      "hash": "sha256-HGbZ+So3gYgXZw\/ZcOjlD0es\/dRq72T73pqKcAWdrlg=",
+      "url": "manifest.webmanifest"
     },
     {
       "hash": "sha256-wX1LB4yuBRFM4fmdSsH6jBlCch9uCHXV9uFTxnz2blQ=",

@@ -138,7 +138,7 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/blazor.webassembly.(*ignore*).js.br"
+      "url": "_framework\/blazor.webassembly.(*ignore*).js"
     },
     {
       "hash": "(*ignore*)",
@@ -170,7 +170,7 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "css\/blazor-ui.css.br"
+      "url": "css\/blazor-ui.css"
     },
     {
       "hash": "(*ignore*)",
@@ -186,7 +186,7 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "manifest.webmanifest.br"
+      "url": "manifest.webmanifest"
     },
     {
       "hash": "(*ignore*)",

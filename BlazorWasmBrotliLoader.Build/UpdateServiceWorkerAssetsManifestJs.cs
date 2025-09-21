@@ -51,16 +51,15 @@ public class UpdateServiceWorkerAssetsManifestJs : Microsoft.Build.Utilities.Tas
             htmlAsset.hash = sha256Poll.GetHashCode(this.GetFullPath(htmlAsset));
         });
 
-        // If the Brotli Loader is enabled, update all hash codes of asset entries that are compressed,
-        // and add asset entries for brotli loader JavaScript files.
+        // If the Brotli Loader is enabled, update all hash codes of asset entries in the "_framework" folder
+        // that are compressed, and add asset entries for brotli loader JavaScript files.
         if (this.InjectBrotliLoader)
         {
             Parallel.ForEach(assetsManifestFile.assets, asset =>
             {
                 // ...but some kinds of files have to exclude.
-                if (asset.url.ToLower().EndsWith(".html")) return;
-                if (asset.url == "_framework/blazor.webassembly.js") return;
-                if (Regex.IsMatch(asset.url, @"^_framework/dotnet(\..*)?\.js$")) return;
+                if (!asset.url.StartsWith("_framework/")) return;
+                if (asset.url.EndsWith(".js")) return;
 
                 var path = this.GetFullPath(asset);
                 var compressedPath = path + ".br";
