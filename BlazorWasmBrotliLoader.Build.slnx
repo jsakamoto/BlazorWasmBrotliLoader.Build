@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/README/">
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="RELEASE-NOTES.txt" />
+  </Folder>
+  <Project Path="BlazorWasmBrotliLoader.Build.Test/BlazorWasmBrotliLoader.Build.Test.csproj" />
+  <Project Path="BlazorWasmBrotliLoader.Build/BlazorWasmBrotliLoader.Build.csproj" />
+</Solution>

@@ -6,7 +6,7 @@ internal static class BundleScripts
 {
     public static void CopyTo(string targetDir)
     {
-        var solutionDir = FileIO.FindContainerDirToAncestor("BlazorWasmBrotliLoader.Build.sln");
+        var solutionDir = FileIO.FindContainerDirToAncestor("BlazorWasmBrotliLoader.Build.slnx");
         var bundleScriptsDir = Path.Combine(solutionDir, "BlazorWasmBrotliLoader.Build", "bundle", "scripts");
         foreach (var scriptName in new[] { "decode.min.js", "brotliloader.min.js" })
         {
