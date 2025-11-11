@@ -34,11 +34,11 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/Microsoft.Extensions.Logging.(*ignore*).wasm.br"
+      "url": "_framework\/Microsoft.Extensions.Logging.Abstractions.(*ignore*).wasm.br"
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/Microsoft.Extensions.Logging.Abstractions.(*ignore*).wasm.br"
+      "url": "_framework\/Microsoft.Extensions.Logging.(*ignore*).wasm.br"
     },
     {
       "hash": "(*ignore*)",
@@ -114,11 +114,11 @@
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/System.Runtime.InteropServices.JavaScript.(*ignore*).wasm.br"
+      "url": "_framework\/System.Runtime.(*ignore*).wasm.br"
     },
     {
       "hash": "(*ignore*)",
-      "url": "_framework\/System.Runtime.(*ignore*).wasm.br"
+      "url": "_framework\/System.Runtime.InteropServices.JavaScript.(*ignore*).wasm.br"
     },
     {
       "hash": "(*ignore*)",
